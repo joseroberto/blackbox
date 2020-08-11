@@ -10,4 +10,4 @@ RUN apt-get update && \
 
 RUN pip3 install psycopg2 
 RUN apt-get update && \
-    apt-get install -y logstash mysql-client
+    apt-get install -y mysql-client
