@@ -1,0 +1,18 @@
+name: main
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v1
+      - run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
+          docker build -t $GITHUB_SHA .
+          docker tag $GITHUB_SHA docker.pkg.github.com/$GITHUB_REPOSITORY/blackbox:latest
+          docker push docker.pkg.github.com/$GITHUB_REPOSITORY/blackbox:latest
